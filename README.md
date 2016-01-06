@@ -3,16 +3,18 @@ Spring Cloud Config repo for my personal apps
 
 
 Configuration files for components should be maintained in the following format in environment-specific repositories and on the master branch only,
-		- {application-name}-{profile}.properties 
-		- For example, the configuration file of the User API for the ITE environment will be cspuserapi-ite.properties.
+		- {application-name}-{profile}.properties
+		- For example, the configuration file of the app restfulservice for the local environment will be restfulservice-local.properties.
 
 		
 All password/confidential information in configuration files should be encrypted. Encrypted values can be generated using Spring CLI, Information to install and generate encrypted values is available at 
-http://projects.spring.io/spring-cloud/spring-cloud.html#_spring_boot_cloud_cli Properties will be encrypted using a public key and the Spring config server will be using a private key to decrypt property values and pass to clients.
- You can find the public key for the relevant environment at \springCloudConfiguration\keys\springconfigserver-public.pem.
+http://projects.spring.io/spring-cloud/spring-cloud.html#_spring_boot_cloud_cli
+Properties will be encrypted using a public key and the Spring config server will be using a private key to decrypt property values
+and pass to clients.
+You can find the public key for the relevant environment at \springCloudConfiguration\keys\springconfigserver-public.pem.
 		- spring encrypt <property value> --key springconfigserver-public.pem where the spring command is part of spring-cli.
 Generated encrypted values should be appended with {cipher} and replaced in configuration files. Example: fixture.auth.password={cipher}903954da6804095d7e0003e3d9b9a70af575be5f73a1d02fc7151a5a078fa674
-Going forward, each environment should have its own repository like dev/ITE/Prod and maintaining different encryption Keys. The environment owning person should be responsible for generating encrypted values.
+Going forward, each environment should have its own repository like DEV/ITE/PROD and maintaining different encryption Keys. The environment owning person should be responsible for generating encrypted values.
 
 
 Spring cloud server is bundled as a docker image and pushed to docker hub and will be running as AWS ECS services as other Spring-Boot Application.
@@ -28,7 +30,7 @@ Expected configuration for docker are as follows which will be injected as envir
 	  
 To activate Spring-config-client, Following configuration should be added in the client project,
 	1. In build.gradle, the following dependency should be added,
-		  compile 'org.springframework.cloud:spring-cloud-config-client:1.0.2.RELEASE'
+		  compile 'org.springframework.cloud:spring-cloud-config-client:1.0.3.RELEASE'
 
 	2. Spring boot launcher should be annotated with @Configuration.
 
